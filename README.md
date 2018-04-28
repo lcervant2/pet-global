@@ -1,4 +1,4 @@
-# PetGlobal
+# PetGlobe
 
 PetGlobal is a website that serves as a platform for pet-related businesses to connect with customers in the Northern Virginia/Washington D.C. metro area.
 

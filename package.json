@@ -1,0 +1,39 @@
+{
+  "name": "pet-globe",
+  "version": "0.1.0",
+  "description": "API server for the PetGlobe service",
+  "main": "bin/www",
+  "scripts": {
+    "server": "node bin/www",
+    "client": "node scripts/start-client.js",
+    "start": "concurrently --kill-others-on-fail \"nodemon bin/www\" \"npm run client\"",
+    "build": "node scripts/build.js",
+    "seed": "node tasks/seed.js",
+    "generate_client": "node tasks/generateClient.js",
+    "generate_reviews": "node tasks/generateReviews.js"
+  },
+  "author": "Luis Cervantes",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "@google/maps": "^0.4.6",
+    "axios": "^0.18.0",
+    "bcrypt": "^2.0.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "change-case": "^3.0.2",
+    "cloudinary": "^1.11.0",
+    "express": "^4.16.3",
+    "express-json-validator-middleware": "^1.2.1",
+    "express-oauth-server": "^2.0.0",
+    "http-status-codes": "^1.3.0",
+    "libphonenumber-js": "^1.1.11",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.15",
+    "multer": "^1.3.0",
+    "multer-storage-cloudinary": "^2.2.1"
+  }
+}

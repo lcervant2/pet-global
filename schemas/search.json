@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Search",
+  "description": "Search schema for the PetGlobal API",
+  "type": "object",
+  "additionalProperties": false,
+  "href": "/api/search",
+  "properties": {
+    "q": {
+      "type": "string"
+    },
+    "service_categories": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "use_location": {
+      "type": "string",
+      "enum": ["true", "false"],
+      "default": "true"
+    },
+    "minimum_rating": {
+      "type": ["string", "null"],
+      "enum": [null, "1", "2", "3", "4", "5"],
+      "default": null
+    }
+  }
+}

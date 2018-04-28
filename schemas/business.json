@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Business",
+  "description": "Business object for the PetGlobal API",
+  "type": "object",
+  "required": ["name", "address", "service_categories"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "email": {
+      "type": ["string", "null"],
+      "format": "email",
+      "default": null
+    },
+    "phone_number": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "website": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "address": {
+      "type": "object",
+      "required": ["address1", "city", "state", "zip_code"],
+      "properties": {
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string"
+        }
+      }
+    },
+    "service_categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "retail",
+          "insurance",
+          "grooming",
+          "relocation",
+          "hotels_and_spas",
+          "veterinary",
+          "emergency",
+          "caretaker",
+          "training"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "User",
+  "description": "User object for the PetGlobal API",
+  "type": "object",
+  "required": [
+    "username",
+    "email",
+    "first_name",
+    "last_name",
+    "address"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "username": {
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "minLength": 1
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8
+    },
+    "first_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "last_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phone_number": {
+      "type": ["string", "null"],
+      "default": null,
+      "minLength": 1
+    },
+    "bio": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "address": {
+      "type": ["object", "null"],
+      "required": ["address1", "city", "state", "zip_code"],
+      "properties": {
+        "address1": {
+          "type": "string",
+          "minLength": 1
+        },
+        "address2": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "zip_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "default": null
+    }
+  }
+}

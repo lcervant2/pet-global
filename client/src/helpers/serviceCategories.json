@@ -1,0 +1,11 @@
+[
+  { "name": "Retail", "value": "retail", "path": "/services/retail", "icon": "shopping basket" },
+  { "name": "Grooming", "value": "grooming", "path": "/services/grooming", "icon": "s15" },
+  { "name": "Training", "value": "training", "path": "/services/training", "icon": "star" },
+  { "name": "Caretaker", "value": "caretaker", "path": "/services/caretaker", "icon": "male" },
+  { "name": "Hotels and Spas", "value": "hotels_and_spas", "path": "/services/hotels_and_spas", "icon": "bar" },
+  { "name": "Insurance", "value": "insurance", "path": "/services/insurance", "icon": "money" },
+  { "name": "Relocation", "value": "relocation", "path": "/services/relocation", "icon": "truck" },
+  { "name": "Veterinary", "value": "veterinary", "path": "/services/veterinary", "icon": "doctor" },
+  { "name": "Emergency", "value": "emergency", "path": "/services/emergency", "icon": "hospital" }
+]

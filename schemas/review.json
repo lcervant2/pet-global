@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "Review",
+  "description": "Review object for the PetGlobal API",
+  "type": "object",
+  "required": [
+    "overall_rating",
+    "price_rating",
+    "customer_service_rating",
+    "quality_rating",
+    "description",
+    "repeat_customer",
+    "transaction_occurred",
+    "date",
+    "service_categories"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "business_id": {
+      "type": "string"
+    },
+    "overall_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "price_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "customer_service_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "quality_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "description": {
+      "type": "string"
+    },
+    "repeat_customer": {
+      "type": "boolean"
+    },
+    "transaction_occurred": {
+      "type": "boolean"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "service_categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "retail",
+          "insurance",
+          "grooming",
+          "relocation",
+          "hotels_and_spas",
+          "veterinary",
+          "emergency",
+          "caretaker",
+          "training"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}

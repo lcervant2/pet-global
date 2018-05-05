@@ -1,4 +1,4 @@
-# PetGlobe
+# PetGlobal
 
 PetGlobal is a website that serves as a platform for pet-related businesses to connect with customers in the Northern Virginia/Washington D.C. metro area.
 
@@ -40,6 +40,20 @@ yarn install
 cd ..
 ```
 
+### Generating Client Credentials
+
+PetGlobal's React client will need a `CLIENT_ID` and `CLIENT_SECRET` in order to request access tokens from the API.
+
+To generate a random set of credentials run
+
+```
+yarn generate_client
+```
+
+This will generate a random `CLIENT_ID` and `CLIENT_SECRET` that you can place in the **client/config.js** file under the desired environment type.
+
+> **Note:** In order for the client to use these in production mode the client must be rebuilt using `yarn build` and redeployed.
+
 ### Seeding the Database
 
 Although PetGlobal accepts manual business registrations it still tries to build a directory of *all* local businesses in the area in order to make the search feature work as expected.
@@ -51,6 +65,16 @@ yarn seed
 ```
 
 This uses the Yelp Business Search API to pull information about nearby pet related services. It then categorizes them and stores them in the PetGlobal database.
+
+All of these businesses will be registered under an account with the username **"businessbot"** and the password **"businessbot"**.
+
+PetGlobal can also generate random reviews for all businesses in the database for testing purposes by running
+
+```
+yarn generate_reviews
+```
+
+This will generate reviews under an account with the username **"reviewbot"** and the password **"reviewbot"**.
 
 > **Note:** This requires a MongoDB process to be running on the local machine or the MONGODB_URI environment variable set. By default PetGlobal will create and use a database called 'petglobal'.
 
@@ -147,15 +171,27 @@ These features will make it easy for users to find the services they need and ma
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 - [mongoose](https://github.com/Automattic/mongoose)
 - [multer](https://github.com/expressjs/multer)
-- [Google Maps Node.js Client](https://github.com/googlemaps/google-maps-services-js)
+- [semantic-ui](https://github.com/Semantic-Org/Semantic-UI-React)
+- [cloudinary](https://github.com/cloudinary/cloudinary_npm)
+- [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js)
+- [lodash](https://github.com/lodash/lodash)
+- [@google/maps](https://github.com/googlemaps/google-maps-services-js)
+- [react-geolocated](https://github.com/no23reason/react-geolocated)
+- [react-datepicker](https://github.com/Hacker0x01/react-datepicker)
+- [moment](https://github.com/moment/moment)
+- [change-case](https://github.com/blakeembrey/change-case)
+- [axios](https://github.com/axios/axios)
+- [express-json-validator-middleware](https://github.com/JouzaLoL/express-json-validator-middleware)
+- [http-status-codes](https://github.com/prettymuchbryce/node-http-status)
+- [multer-storage-cloudinary](https://github.com/affanshahid/multer-storage-cloudinary)
 
 ## Architecture Diagram
 
-<img src="architecture_diagram.png" width="500" />
+<img src="public/architecture_diagram.png" width="500" />
 
 ## UI Mockup
 
-<img src="ui_mockup.png" width="700" />
+<img src="public/ui_mockup.png" width="700" />
 
 ## API Docs
 
@@ -169,7 +205,7 @@ Authentication conforms to the OAuth2 protocol. Clients that successfully authen
 "access_token": <access token>
 "refresh_token": <refresh token>
 "expires_in": <time until expiration in seconds>
-"type": "bearer"
+"token_type": "bearer"
 ```
     
 The access token should be provided on all requests through HTTP headers:
@@ -228,32 +264,50 @@ This is a list of all available API endpoints.
     - `password` - Desired password
     - `first_name` - First name
     - `last_name` - Last name
-    - `phone_number` *(optional)* - Phone number
-    - `address` *(optional)* - Address
-        - `street1` - Street address line 1
-        - `street2` - Street address line 2
+    - `address` - Address
+        - `address1` - Street address line 1
+        - `address2` - Street address line 2
         - `city`
         - `state`
         - `zip_code`
+    - `phone_number` *(optional)* - Phone number
+    - `bio` *(optional)* - Bio
 
 - `GET /api/account` - Returns user details of the logged in user
 - `PUT /api/account` - Updates the logged in user's account details
 
     **Parameters**
 
-    - `username` *(optional)* - New desired username
-    - `email` *(optional)* - Email address
-    - `first_name` *(optional)* - First name
-    - `last_name` *(optional)* - Last name
-    - `phone_number` *(optional)* - Phone number
-    - `address` *(optional)* - Address
-        - `street1` - Street address line 1
-        - `street2` - Street address line 2
+    - `username` - Desired username
+    - `email` - Email address
+    - `first_name` - First name
+    - `last_name` - Last name
+    - `address` - Address
+        - `address1` - Street address line 1
+        - `address2` - Street address line 2
         - `city`
         - `state`
         - `zip_code`
+    - `phone_number` *(optional)* - Phone number
+    - `bio` *(optional)* - Bio
+
+- `POST /api/account/password` - Updates the current user's password
+
+    **Parameters**
+
+    - `new_password` - Desired password
+    - `old_password` - Old password for the user
 
 - `DELETE /api/account` - Closes the logged in user's account permanently
+- `POST /api/account/image` - Uploads a new profile picture for the current user
+
+    > **Note:** This endpoint requires data to be encoded `multipart/form-data`.
+
+    **Parameters**
+
+    - `image` - The image filed to upload
+
+- `DELETE /api/account/image` - Removes the current user's profile picture
 - `POST /api/oauth/token` - Request a new access token using [user credentials](#using-user-credentials) or [refresh tokens](#using-refresh-tokens)
 
     > **Note:** This endpoint does not allow JSON. Data must be encoded `application/x-www-form-urlencoded`.
@@ -286,7 +340,12 @@ This is a list of all available API endpoints.
 
 #### Businesses
 
-- `GET /api/businesses` - Returns top 20 most popular/highly rated businesses
+- `GET /api/businesses` - Returns businesses based on the query parameters
+
+    **Parameters**
+
+    - `user` *(optional)* - Database ID of the user
+
 - `GET /api/businesses/:id` - Returns the business with the given id
 - `POST /api/businesses` - Registers a new business
 
@@ -295,32 +354,32 @@ This is a list of all available API endpoints.
     - `name` - Name of the business
     - `description` - Description of the business
     - `address` - Address of the business
-        - `street1` - Street address line 1
-        - `street2` - Street address line 2
+        - `address1` - Street address line 1
+        - `address2` - Street address line 2
         - `city`
         - `state`
         - `zip_code`
-    - `email` *(optional)* - Contact email
+    - `email` - Contact email
+    - `service_categories` - Service categories applicable to this business (see [Service Categories](#service-categories))
     - `phone_number` *(optional)* - Contact phone number
     - `website` *(optional)* - URL of website
-    - `service_categories` - Service categories applicable to this business (see [Service Categories](#service-categories))
 
 - `PUT /api/businesses/:id` - Updates a registered business
 
     **Parameters**
 
-    - `name` *(optional)* - Name of the business
-    - `description` *(optional)* - Description of the business
-    - `address` *(optional)* - Address of the business
-        - `street1` - Street address line 1
-        - `street2` - Street address line 2
+    - `name` - Name of the business
+    - `description` - Description of the business
+    - `address` - Address of the business
+        - `address1` - Street address line 1
+        - `address2` - Street address line 2
         - `city`
         - `state`
         - `zip_code`
-    - `email` *(optional)* - Contact email
+    - `email` - Contact email
+    - `service_categories` - Service categories applicable to this business (see [Service Categories](#service-categories))
     - `phone_number` *(optional)* - Contact phone number
     - `website` *(optional)* - URL of website
-    - `service_categories` *(optional)* - Service categories applicable to this business (see [Service Categories](#service-categories))
 
 - `DELETE /api/businesses/:id` - Deletes a registered business
 - `POST /api/businesses/:id/images` - Uploads an image of the business
@@ -329,17 +388,18 @@ This is a list of all available API endpoints.
 
     **Parameters**
 
-    - `file` - The image file to upload
+    - `image` - The image file to upload
 
-- `DELETE /api/businesses/:business_id/images/:id` - Deletes the image with the given ID for the business with the given ID
+- `DELETE /api/businesses/:id/images/:image_id` - Deletes the image with the given ID for the business with the given ID
 
 #### Reviews
 
-- `GET /api/reviews` - If `business_id` is not specified this will return all of the reviews the current user has written, otherwise it will return all of the reviews for the given business
+- `GET /api/reviews` - Returns reviews based on the query parameters
 
     **Parameters**
 
-    - `business_id` *(optional)* - Database ID of the business
+    - `business` *(optional)* - Database ID of the business
+    - `user` *(optional)* - Database ID of the user
 
 - `GET /api/reviews/:id` - Gets the review with the given id
 - `POST /api/reviews` - Adds a new review for a specific business
@@ -360,15 +420,15 @@ This is a list of all available API endpoints.
 - `PUT /api/reviews/:id` - Updates a review
 
     **Parameters**
-    - `overall_rating` *(optional)* - Overall rating (1 to 5) of the experience
-    - `customer_service_rating` *(optional)* - Rating (1 to 5) on customer service
-    - `quality_rating` *(optional)* - Rating (1 to 5) on quality of product or service received
-    - `price_rating` *(optional)* - Rating (1 to 5) on the business' prices
-    - `description` *(optional)* - Description of the service experience
-    - `service_categories` *(optional)* - Applicable categories describing what services the customer was trying to receive (see [Service Categories](#service-categories))
-    - `repeat_customer` *(optional)* - True/false whether or not the user would go back
-    - `transaction_occurred` *(optional)* - True/false whether or not the user paid money for a service or bought something while they were there
-    - `date` *(optional)* - When they went to/contacted the business
+    - `overall_rating` - Overall rating (1 to 5) of the experience
+    - `customer_service_rating` - Rating (1 to 5) on customer service
+    - `quality_rating` - Rating (1 to 5) on quality of product or service received
+    - `price_rating` - Rating (1 to 5) on the business' prices
+    - `description` - Description of the service experience
+    - `service_categories` - Applicable categories describing what services the customer was trying to receive (see [Service Categories](#service-categories))
+    - `repeat_customer` - True/false whether or not the user would go back
+    - `transaction_occurred` - True/false whether or not the user paid money for a service or bought something while they were there
+    - `date` - When they went to/contacted the business
 
 - `DELETE /api/reviews/:id` - Deletes the review with the given ID.
 
@@ -396,6 +456,8 @@ The PetGlobal API uses service categories to group businesses by what services t
 - `hotels_and_spas`
 - `veterinary`
 - `emergency`
+- `caretaker`
+- `training`
 
 
 ## Database
@@ -415,7 +477,8 @@ PetGlobal uses a MongoDB database backend with the following models.
 | lastName | `String` |
 | phoneNumber | `String` |
 | address | `Object` |
-| location | `String` |
+| formattedAddress | `String` |
+| location | `Object` |
 | businesses | **one-to-many** `Business` |
 | reviews | **one-to-many** `Review` |
 
@@ -451,20 +514,14 @@ PetGlobal uses a MongoDB database backend with the following models.
 | description | `String` |
 | serviceCategories | `Array` |
 | address | `Object` |
-| location | `String` |
+| formattedAddress | `String` |
+| location | `Object` |
 | email | `String` |
 | phoneNumber | `String` |
 | website | `String` |
-| images | **one-to-many** `BusinessImage` |
+| images | `Array` |
 | reviews | **one-to-many** `Review` |
 | user | **belongs-to** `User` |
-
-### BusinessImage
-| Field | Type |
-| --- | --- |
-| _id | `ObjectId` |
-| url | `String` |
-| business | **belongs-to** `Business` |
 
 ### Review
 | Field | Type |

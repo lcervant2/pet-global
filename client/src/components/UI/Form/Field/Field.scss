@@ -1,0 +1,24 @@
+@import '../../../../base';
+
+.form__field {
+
+  display: block;
+  flex: 1;
+
+  padding: 0;
+  margin: 0;
+
+  & + &,
+  .form__group + &,
+  & + .form__group {
+    margin-top: 1rem;
+  }
+
+  label {
+    display: block;
+    font-size: $font-size-primary;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+}

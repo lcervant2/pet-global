@@ -1,57 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Container,
-  Segment,
-  Header,
-  Grid
-} from 'semantic-ui-react';
-import './Footer.css';
+import classNames from 'classnames';
+import './Footer.scss';
 
-import SpacedSegment from '../SpacedSegment';
+// import SpacedSegment from '../SpacedSegment';
+
+import Container from '../UI/Container/Container';
 
 import { withAuth } from '../../helpers/withAuth';
 
 class Footer extends Component {
 
   render() {
-    const { isLoggedIn, currentUser } = this.props;
+    const { isLoggedIn, currentUser, className } = this.props;
+
+    const inputClass = classNames('footer', className);
+    const containerClass = classNames('footer__container');
+    const sectionClass = classNames('footer__section');
+    const headerClass = classNames('footer__section__header');
+    const linkClass = classNames('footer__section__link');
 
     return (
-      <div className='footer'>
-        <Container>
-          <Grid>
-            <Grid.Row>
+      <div className={inputClass}>
+        <Container className={containerClass}>
 
-              <Grid.Column largeScreen={4} mobile={16}>
-                <SpacedSegment spacing={2}><Header size='medium' className='footer-header'>Account</Header></SpacedSegment>
-                {isLoggedIn ? (
-                  <div>
-                    <SpacedSegment spacing={1}><Link to={'/profile/' + currentUser.username} className='footer-link'>Profile</Link></SpacedSegment>
-                    <SpacedSegment spacing={1}><Link to='/settings' className='footer-link'>Settings</Link></SpacedSegment>
-                  </div>
-                ) : (
-                  <div>
-                    <SpacedSegment spacing={1}><Link to='/signup' className='footer-link'>Sign Up</Link></SpacedSegment>
-                    <SpacedSegment spacing={1}><Link to='/login' className='footer-link'>Login</Link></SpacedSegment>
-                  </div>
-                )}
-              </Grid.Column>
+          <div className={sectionClass}>
+            <div className={headerClass}>Account</div>
+            {isLoggedIn ? (
+              <div>
+                <Link to={'/profile/' + currentUser.username} className={linkClass}>Profile</Link>
+                <Link to='/settings' className={linkClass}>Settings</Link>
+              </div>
+            ) : (
+              <div>
+                <Link to='/login' className={linkClass}>Login</Link>
+                <Link to='/signup' className={linkClass}>Sign Up</Link>
+              </div>
+            )}
+          </div>
 
-              <Grid.Column largeScreen={4} mobile={16}>
-                <SpacedSegment spacing={2}><Header size='medium' className='footer-header'>PetGlobe</Header></SpacedSegment>
-                <SpacedSegment spacing={1}><Link to='/' className='footer-link'>About Us</Link></SpacedSegment>
-                <SpacedSegment spacing={1}><Link to='/' className='footer-link'>Contact Us</Link></SpacedSegment>
-                <SpacedSegment spacing={1}><Link to='/' className='footer-link'>Terms and Conditions</Link></SpacedSegment>
-              </Grid.Column>
+          <div className={sectionClass}>
+            <div className={headerClass}>PetGlobal</div>
+            <Link to='/about' className={linkClass}>About Us</Link>
+            <Link to='/terms' className={linkClass}>Terms and Conditions</Link>
+          </div>
 
-              <Grid.Column largeScreen={8} mobile={16}>
-                <SpacedSegment spacing={2}><Header size='medium' className='footer-header'>Are you a business owner?</Header></SpacedSegment>
-                <SpacedSegment spacing={1}><Link to='/businesses/register' className='footer-link'>Register Your Business</Link></SpacedSegment>
-              </Grid.Column>
+          <div className={sectionClass}>
+            <div className={headerClass}>Are you a business owner?</div>
+            <Link to='/businesses/register' className={linkClass}>Register Your Business</Link>
+            <Link to='/services' className={linkClass}>Business Services</Link>
+          </div>
 
-            </Grid.Row>
-          </Grid>
+          <div className={sectionClass} />
+
         </Container>
       </div>
     )

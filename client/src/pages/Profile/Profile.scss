@@ -1,0 +1,70 @@
+@import '../../base';
+
+.profile-page {
+
+  padding: 1rem 0 5rem 0;
+
+  &__main {
+
+    display: grid;
+    grid-template-columns: auto 18rem;
+    grid-column-gap: 1.5rem;
+
+    @media #{$mobile-breakpoint} {
+      grid-template-columns: auto;
+    }
+
+    &__header {
+
+      display: grid;
+      grid-template-columns: 10rem auto;
+      grid-column-gap: 2rem;
+
+      @media #{$mobile-breakpoint} {
+        grid-template-columns: 4rem auto;
+        grid-column-gap: 1rem;
+      }
+
+      &__details {
+
+
+
+      }
+
+    }
+
+    &__reviews {
+
+      margin-top: 1rem;
+
+    }
+
+    &__stat {
+
+      font-size: $font-size-title;
+      font-weight: 700;
+      text-align: center;
+
+      .rating {
+        font-size: $font-size-headline;
+      }
+
+      h3 {
+        margin-top: 1rem;
+        margin-bottom: 0;
+        line-height: $font-size-sub-headline;
+      }
+
+      & + & {
+        margin-top: 1rem;
+      }
+      
+      @media #{$mobile-breakpoint} {
+        display: none;
+      }
+
+    }
+
+  }
+
+}

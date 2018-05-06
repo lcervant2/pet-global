@@ -1,0 +1,23 @@
+@import '../../../base';
+
+.rating {
+
+  &__star {
+    display: inline-block;
+
+    color: $rating-star-off-color;
+
+    & + & {
+      margin-left: 0.125rem;
+    }
+
+    &--on {
+      color: $rating-star-on-color;
+    }
+  }
+
+  &--dark &__star--on {
+    color: $text-color;
+  }
+
+}

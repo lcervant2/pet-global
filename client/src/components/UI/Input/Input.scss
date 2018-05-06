@@ -1,0 +1,67 @@
+@import '../../../base';
+
+.input {
+  display: flex;
+  flex: 1;
+
+  margin: 0;
+  padding: 0;
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+
+    flex: 1;
+
+    margin: 0;
+    padding: 0.375rem 0.75rem;
+
+    background: $input-background;
+    border: 1px solid $input-border-color;
+    border-radius: 4px;
+
+    cursor: text;
+
+    transition: all 0.2s;
+
+    &--show-icon {
+      padding-left: 0;
+    }
+
+    &--show-focus {
+      border-color: $input-focus-border-color;
+    }
+
+    @include attachments;
+  }
+
+  &__input {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-size: $font-size-primary;
+    line-height: $line-height-primary;
+
+    flex: 1;
+
+    outline: none;
+    border: none;
+
+    &::placeholder {
+      color: $input-placeholder;
+    }
+  }
+
+  &__icon {
+    width: 2.5rem;
+    line-height: 0;
+    text-align: center;
+    color: $input-icon-color;
+  }
+}

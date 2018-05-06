@@ -1,0 +1,14 @@
+.menu__bar {
+  display: inline-flex;
+  align-items: center;
+
+  & + &,
+  & + .menu__item,
+  .menu__item + & {
+    margin-left: 2.5rem;
+  }
+
+  &--expand {
+    flex: 1;
+  }
+}

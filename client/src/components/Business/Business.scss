@@ -1,0 +1,47 @@
+@import '../../base';
+
+.business {
+
+  &__container {
+
+    display: grid;
+    grid-template-columns: 8rem auto 10rem;
+    grid-template-rows: auto;
+    grid-column-gap: 2rem;
+
+    a {
+      color: $text-color;
+    }
+
+    &__address {
+
+      font-size: $font-size-secondary;
+      line-height: $line-height-secondary;
+      color: $weak-text-color;
+
+      margin-bottom: 0.5rem;
+
+    }
+
+    &__rating-container {
+
+      text-align: center;
+
+      font-size: $font-size-sub-headline;
+      line-height: $line-height-sub-headline;
+      font-weight: 600;
+
+    }
+
+    @media #{$mobile-breakpoint} {
+      grid-template-columns: 4rem auto;
+      grid-column-gap: 1rem;
+
+      &__rating-container {
+        display: none !important;
+      }
+    }
+
+  }
+
+}

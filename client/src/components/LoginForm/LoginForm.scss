@@ -1,0 +1,15 @@
+@import '../../base';
+
+.login-form {
+  width: 36rem;
+  margin: 0 auto;
+
+  @media #{$mobile-breakpoint} {
+    width: 100%;
+  }
+
+  &__forgot-password {
+    text-align: center;
+  }
+
+}

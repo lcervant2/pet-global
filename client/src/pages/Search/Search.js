@@ -1,22 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import {
-  Container,
-  Form,
-  Input,
-  Button,
-  Header,
-  Divider,
-  Segment,
-  Dropdown,
-  Grid
-} from 'semantic-ui-react';
+import './Search.scss';
+
+import BusinessList from '../../components/BusinessList/BusinessList';
+import Form from '../../components/UI/Form/Form';
+import Input from '../../components/UI/Input/Input';
+import Rating from '../../components/UI/Rating/Rating';
+import BusinessMap from '../../components/BusinessMap/BusinessMap';
+import Loader from '../../components/UI/Loader/Loader';
+import Footer from '../../components/Footer/Footer';
+import Button from '../../components/UI/Button/Button';
 
 import { geolocated } from 'react-geolocated';
-import queryString from 'query-string';
-
-import SpacedSegment from '../../components/SpacedSegment';
-import Business from '../../components/Business';
+import qs from 'qs';
 
 import APIService from '../../services/APIService';
 
@@ -39,6 +35,7 @@ class Search extends Component {
       { key: '5', value: '5', text: '5' }
     ];
 
+    this.updateMapTop = this.updateMapTop.bind(this);
     this.updateLocations = this.updateLocations.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
@@ -53,7 +50,9 @@ class Search extends Component {
       message: null,
       location: null,
       locations: [],
-      geolocationFinished: false
+      geolocationFinished: false,
+      queryHeight: 0,
+      mapTop: 0
     };
   }
 
@@ -61,18 +60,27 @@ class Search extends Component {
     this.updateLocations(this.props, true);
 
     // parse query string
-    const query = queryString.parse(this.props.location.search, { arrayFormat: 'index' });
+    const query = qs.parse(this.props.location.search.slice(1), { arrayFormat: 'index' });
     this.setState(query);
   }
 
   componentDidMount() {
+    this.updateMapTop(this.props.headerHeight);
+
     // run initial search if query is present
     if (this.props.location.search.length)
       this.handleSubmit();
   }
 
   componentWillReceiveProps(newProps) {
+    this.updateMapTop(newProps.headerHeight);
     this.updateLocations(newProps);
+  }
+
+  updateMapTop(headerHeight) {
+    this.setState({
+      mapTop: headerHeight + this.queryNode.getBoundingClientRect().height
+    });
   }
 
   updateLocations(props, initialUpdate = false) {
@@ -118,98 +126,63 @@ class Search extends Component {
     if (e)
       e.preventDefault();
 
-    const query = queryString.stringify({
+    const query = qs.stringify({
       query: this.state.query,
       serviceCategories: this.state.serviceCategories,
       minimumRating: this.state.minimumRating,
       location: this.state.location
     }, { arrayFormat: 'index' });
-    this.props.history.push({ pathname: '/search', search: query });
+    this.props.history.push('/search?' + query);
+
+    console.log(this.state);
 
     this.setState({
       isLoading: true,
       results: []
     });
 
-    APIService.shared().requestSearch(this.state.query, this.state.serviceCategories, this.state.minimumRating, this.state.location)
+    APIService.shared().requestSearch({
+      query: this.state.query,
+      serviceCategories: this.state.serviceCategories,
+      minimumRating: this.state.minimumRating,
+      location: this.state.location
+    })
       .then(response => {
         this.setState({
           isLoading: false,
-          results: response.slice(0, 50),
+          results: response.slice(0, 20),
           message: !response.length ? 'No results' : null
         });
       });
   }
 
   render() {
-    const { query, serviceCategories, minimumRating, isLoading, results, message, locations, location } = this.state;
+    const { query, serviceCategories, minimumRating, isLoading, results, message, locations, location, mapTop } = this.state;
+    const { headerHeight } = this.props;
 
     return (
-      <Container>
+      <div className='search-page'>
 
-        <Grid centered>
-          <Grid.Row>
-            <Grid.Column width={16}>
+        <div ref={node => this.queryNode = node} className='search-page__query' style={{ top: headerHeight + 'px' }}>
+          <Form onSubmit={this.handleSubmit}>
+            <Input type='text' value={query} name='query' placeholder='Search...' onChange={this.handleChange} action={<Button type='button' secondary onClick={this.handleSubmit}>Search</Button>} icon='search' />
+          </Form>
+        </div>
 
-              <Segment as={Form} onSubmit={this.handleSubmit} textAlign='center'>
+        {isLoading && <Loader />}
+        <div>
+          {!isLoading && message &&
+            <div className='search-page__message'>
+              {message}
+            </div>
+          }
+          {!isLoading && !message && <BusinessList businesses={results} />}
+          <Footer />
+        </div>
+        {!isLoading && <BusinessMap businesses={results} style={{ top: mapTop + 'px', width: '100%', height: (window.innerHeight - mapTop) + 'px' }} />}
 
-                <Form.Group inline widths='equal'>
 
-                  <Form.Field width={8}>
-                    <Input type='text' name='query' value={query} onChange={this.handleChange} placeholder='Search...' />
-                    <Button type='submit' primary content='Search' />
-                  </Form.Field>
-
-                </Form.Group>
-
-                <Divider horizontal>Filters</Divider>
-
-                <Form.Group inline style={{ display: 'block', margin: '0px auto' }}>
-
-                  <Form.Field style={{ display: 'inline-block' }}>
-                    <label>Categories</label>
-                    <Dropdown name='serviceCategories' multiple selection
-                              options={this.serviceCategories} onChange={this.handleChange}
-                              value={serviceCategories} placeholder='Category Filter'
-                    />
-                  </Form.Field>
-
-                  <Form.Field style={{ display: 'inline-block' }}>
-                    <label>Minimum Rating</label>
-                    <Dropdown name='minimumRating' selection
-                              options={this.ratingFilters} onChange={this.handleChange}
-                              value={minimumRating} placeholder='Rating Filter'
-                    />
-                  </Form.Field>
-
-                  <Form.Field style={{ display: 'inline-block' }}>
-                    <label>Location</label>
-                    <Dropdown name='location' selection
-                              options={locations} onChange={this.handleChange}
-                              value={location} placeholder='Location Filter'
-                    />
-                  </Form.Field>
-
-                </Form.Group>
-
-              </Segment>
-
-              <Divider section />
-
-              <Segment basic loading={isLoading}>
-                {message !== null &&
-                <Header size='medium' textAlign='center'>{message}</Header>
-                }
-                {results.map(result => (
-                  <SpacedSegment spacing={3} key={result.id}><Business business={result} /></SpacedSegment>
-                ))}
-              </Segment>
-
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-
-      </Container>
+      </div>
     );
   }
 

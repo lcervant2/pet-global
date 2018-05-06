@@ -1,0 +1,31 @@
+@import '../../../../base';
+
+$list-item-margin: 1rem;
+
+.list__item {
+
+  margin: 0;
+  margin: $list-item-margin;
+
+  background-color: white;
+
+  &:first-child {
+    padding-top: $list-item-margin;
+  }
+
+  &:last-child {
+    padding-bottom: $list-item-margin;
+  }
+
+  & + & {
+    &::before {
+      content: '';
+      display: block;
+      margin-bottom: $list-item-margin;
+      background-color: $border-color;
+      width: 100%;
+      height: 1px;
+    }
+  }
+
+}

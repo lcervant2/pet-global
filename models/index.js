@@ -3,5 +3,6 @@ module.exports = {
   OAuthToken: require('./oauth_token'),
   OAuthClient: require('./oauth_client'),
   Business: require('./business'),
-  Review: require('./review')
+  Review: require('./review'),
+  PasswordResetToken: require('./password_reset_token')
 };

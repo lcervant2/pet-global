@@ -1,7 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-
-@verticalPadding: 1.5em;
-
-@iconSize: 2.5em;

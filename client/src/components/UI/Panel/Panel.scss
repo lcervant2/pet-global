@@ -1,0 +1,38 @@
+@import '../../../base';
+
+.panel {
+
+  overflow: hidden;
+
+  &__content {
+    padding: 0.5rem;
+
+    background-color: white;
+
+    overflow: hidden;
+
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+  }
+
+  &--extra-padding > &__content {
+    padding: 1.5rem;
+  }
+
+  &--no-padding > &__content {
+    padding: 0;
+  }
+
+  &--border-top &__content {
+    border-top: 1px solid $border-color;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+
+  &--border-bottom &__content {
+    border-bottom: 1px solid $border-color;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+}

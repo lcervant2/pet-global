@@ -1,0 +1,17 @@
+@import '../../../base';
+
+.vertical-center {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  height: 100%;
+
+  &__container {
+
+    flex: 1;
+
+  }
+
+}

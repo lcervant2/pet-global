@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Container,
-  Header,
-  Segment,
-  Button
-} from 'semantic-ui-react';
 
-import SpacedSegment from '../../components/SpacedSegment';
-import Business from '../../components/Business';
+import BusinessList from '../../components/BusinessList/BusinessList';
 
 import APIService from '../../services/APIService';
 
@@ -56,22 +49,7 @@ class Businesses extends Component {
     const { isLoading, businesses } = this.state;
 
     return (
-      <Container>
-        <SpacedSegment spacing={4}>
-          <Header size='huge'>Your Businesses</Header>
-        </SpacedSegment>
-        <Segment basic loading={isLoading}>
-          {!isLoading && !businesses.length &&
-            <SpacedSegment spacing={0} padding={4} style={{ textAlign: 'center' }}>
-              <SpacedSegment spacing={4}><Header size='medium'>You don't have any businesses</Header></SpacedSegment>
-              <Button as={Link} to='/businesses/register' primary size='large' content='Register a Business' />
-            </SpacedSegment>
-          }
-          {businesses.map(business => (
-            <SpacedSegment key={business.id} spacing={3}><Business business={business} /></SpacedSegment>
-          ))}
-        </Segment>
-      </Container>
+      <BusinessList businesses={businesses} />
     );
   }
 

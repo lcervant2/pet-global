@@ -1,0 +1,29 @@
+@import '../../../../base';
+
+.menu__dropdown {
+
+  position: relative;
+  display: inline-block;
+
+  z-index: 10;
+
+  &--showing &__content {
+    display: block;
+  }
+
+  &__display {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: $menu-link-color;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover,
+    &--showing {
+      color: $menu-link-color-hover;
+      background-color: $menu-link-background-hover;
+    }
+  }
+
+}

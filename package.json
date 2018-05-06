@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@google/maps": "^0.4.6",
+    "@sendgrid/mail": "^6.2.1",
     "axios": "^0.18.0",
     "bcrypt": "^2.0.0",
-    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "change-case": "^3.0.2",
     "cloudinary": "^1.11.0",

@@ -1,0 +1,107 @@
+/* Helpers */
+
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+/* Base Colors */
+
+$paynes-grey: #4f6c78;
+$rich-black: hsla(195%, 46%, 5%, 1);
+$columbia-blue: hsla(197%, 33%, 81%, 1);
+$cosmic-bolt: hsla(230%, 48%, 36%, 1);
+$logo-green: #00ad65;
+$desire: #e63746;
+$picton-blue: #47acf0;
+$pale-gold: #ECBA82;
+$yellow: #FFDE5B;
+$orange: #FF8F4F;
+$blue: #75BCE5;
+$red: #FF715B;
+
+$gray: #eff0f0;
+
+$primary-color: $logo-green;
+$secondary-color: desaturate(darken($blue, 10%), 40%);
+
+$text-color: $rich-black;
+$weak-text-color: desaturate(lighten($paynes-grey, 10%), 20%);
+
+$link-color: $picton-blue;
+$link-hover-color: darken($picton-blue, 20%);
+
+$page-background-color: $gray;
+
+$header-background-color: tint(desaturate(lighten($columbia-blue, 5%), 20%), 20%);
+$services-menu-background-color: desaturate(lighten($rich-black, 15%), 20%);
+
+$footer-background-color: $rich-black;
+$footer-header-color: rgba(white, 0.4);
+$footer-link-color: rgba(white, 0.6);
+$footer-link-hover-color: white;
+
+$panel-header-background-color: tint(lighten($header-background-color, 5%), 20%);
+
+$panel-footer-background-color: tint(lighten($yellow, 25%), 70%);
+$panel-footer-border-color: tint(darken($yellow, 50%), 60%);
+
+$border-color: desaturate(lighten($cosmic-bolt, 55%), 40%);
+
+$button-background: tint(desaturate(lighten($paynes-grey, 40%), 15%), 20%);
+$button-background-hover: darken($button-background, 10%);
+$button-text: rgba(lighten($text-color, 10%), 0.95);
+$button-text-hover: $text-color;
+
+$button-primary-background: $primary-color;
+$button-primary-background-hover: darken($primary-color, 10%);
+$button-primary-text: rgba(white, 0.95);
+$button-primary-text-hover: white;
+
+$button-secondary-background: $secondary-color;
+$button-secondary-background-hover: darken($secondary-color, 10%);
+$button-secondary-text: rgba(white, 0.95);
+$button-secondary-text-hover: white;
+
+$button-danger-background: $red;
+$button-danger-background-hover: darken($red, 10%);
+$button-danger-text: rgba(white, 0.95);
+$button-danger-text-hover: white;
+
+$input-background: white;
+$input-placeholder: tint(lighten(desaturate($paynes-grey, 10%), 30%), 10%);
+$input-border-color: tint(lighten($border-color, 5%), 10%);
+$input-focus-border-color: desaturate(lighten($cosmic-bolt, 40%), 10%);
+$input-icon-color: $weak-text-color;
+
+$menu-link-color: rgba($text-color, 0.85);
+$menu-link-color-hover: $text-color;
+$menu-link-background-hover: rgba($text-color, 0.2);
+
+//$menu-compact-link-color: rgba(desaturate(lighten($text-color, 5%), 20%), 0.95);
+//$menu-compact-link-hover-color: $text-color;
+//$menu-compact-link-background-hover: darken($services-menu-background, 10%);
+
+$menu-compact-link-color: rgba(white, 0.85);
+$menu-compact-link-hover-color: white;
+$menu-compact-link-background-hover: desaturate(lighten($rich-black, 30%), 40%);
+
+$menu-dropdown-color: rgba($text-color, 0.85);
+$menu-dropdown-hover-color: $text-color;
+$menu-dropdown-background-color: white;
+$menu-dropdown-background-hover-color: desaturate(lighten($columbia-blue, 10%), 15%);
+
+$message-title-color: $text-color;
+$message-title-error-color: desaturate(lighten($desire, 5%), 20%);
+$message-content-color: $text-color;
+$message-content-error-color: desaturate(lighten($desire, 5%), 30%);
+$message-background-color: white;
+$message-background-error-color: lighten($desire, 35%);
+$message-border-color: $border-color;
+$message-border-error-color: lighten($desire, 20%);
+
+$rating-star-off-color: $weak-text-color;
+$rating-star-on-color: $yellow;

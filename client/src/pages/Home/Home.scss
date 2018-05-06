@@ -1,0 +1,50 @@
+@import '../../base';
+
+.home-page {
+
+  height: 34rem;
+
+  background-image: linear-gradient(rgba($rich-black, 0.4), rgba($rich-black, 0.4)), url('../../images/home_background6.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  .container {
+    height: 100%;
+  }
+
+  &__form {
+
+    width: 42rem;
+
+    margin: 0 auto;
+
+    position: relative;
+    bottom: 2rem;
+
+    .image {
+      display: block;
+      margin: 0 auto;
+      max-width: 14rem;
+      margin-bottom: 1rem;
+    }
+
+    .input__container {
+      padding: 0.75rem 0.5rem;
+    }
+
+    @media #{$mobile-breakpoint} {
+      width: 100%;
+    }
+
+  }
+
+  &__slogan {
+    text-align: center;
+    width: 100%;
+    color: white;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+}

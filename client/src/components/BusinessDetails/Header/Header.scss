@@ -1,0 +1,50 @@
+@import '../../../base';
+
+.business-details__header {
+
+  display: grid;
+  grid-template-columns: auto 14rem;
+  grid-column-gap: 2rem;
+
+  padding: 2rem;
+
+  @media #{$mobile-breakpoint} {
+    grid-template-columns: 100%;
+    grid-row-gap: 1rem;
+  }
+
+  &__info {
+
+    color: $weak-text-color;
+
+    .icon {
+      margin-right: 0.5rem;
+    }
+
+    a {
+      display: inline-block;
+    }
+
+  }
+
+  &__desc {
+
+    margin-top: 0.5rem;
+
+  }
+
+  &__rating {
+
+    text-align: center;
+
+    font-size: $font-size-sub-headline;
+    line-height: $line-height-sub-headline;
+    font-weight: 600;
+
+  }
+
+  .button {
+    margin-top: 1rem;
+  }
+
+}

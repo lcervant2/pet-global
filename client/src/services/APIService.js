@@ -178,27 +178,14 @@ class APIService {
       .catch(err => console.log(err));
   }
 
-  signUp(username, email, password, firstName, lastName, address1, address2, city, state, zipCode) {
+  signUp(params) {
     return this._request('/register', {
       method: 'post',
-      data: filterParams({
-        'username': username,
-        'email': email,
-        'password': password,
-        'first_name': firstName,
-        'last_name': lastName,
-        'address': filterParams({
-          'address1': address1,
-          'address2': address2,
-          'city': city,
-          'state': state,
-          'zip_code': zipCode
-        })
-      })
+      data: filterParams(snakeCase(params))
     })
-      .then(response => {
+      .then(() => {
         // login
-        return this.login(username, password);
+        return this.login(params.username, params.password);
       });
   }
 
@@ -213,6 +200,18 @@ class APIService {
       }
     })
       .then(response => {
+        // capture the new user
+        this.setCurrentUser(response);
+        return response;
+      });
+  }
+
+  deleteProfilePicture() {
+    return this._request('/account/image', {
+      method: 'delete'
+    })
+      .then(response => {
+        // capture the new user
         this.setCurrentUser(response);
         return response;
       });
@@ -223,8 +222,8 @@ class APIService {
       method: 'get'
     })
       .then(response => {
+        // capture the new user
         this.setCurrentUser(response);
-
         return response;
       });
   }
@@ -250,6 +249,7 @@ class APIService {
       })
     })
       .then(response => {
+        // capture the new user
         this.setCurrentUser(response);
         return response;
       });
@@ -264,6 +264,7 @@ class APIService {
       }
     })
       .then(response => {
+        // capture the new user
         this.setCurrentUser(response);
         return response;
       });
@@ -276,26 +277,52 @@ class APIService {
       .then(response => this.logout());
   }
 
+  resetPassword(email) {
+    return this._request('/password/reset', {
+      method: 'post',
+      data: {
+        'email': email
+      }
+    });
+  }
+
+  confirmPassword(token, user, password) {
+    return this._request('/password/reset/confirm', {
+      method: 'post',
+      data: {
+        'token': token,
+        'user': user,
+        'new_password': password
+      }
+    });
+  }
+
   requestUser(username) {
     return this._request('/users/' + username, {
       method: 'get'
     });
   }
 
-  requestSearch(q, serviceCategories, minimumRating, location) {
+  requestSearch({ query, serviceCategories, minimumRating, location }) {
     return this._request('/search', {
       method: 'get',
-      params: {
-        'q': q,
-        'service_categories': serviceCategories.join(','),
+      params: filterParams({
+        'q': query,
+        'service_categories': (serviceCategories && serviceCategories.length > 0) ? serviceCategories.join(',') : null,
         'minimum_rating': minimumRating,
         'location': location
-      }
+      })
     });
   }
 
   requestBusiness(id) {
     return this._request('/businesses/' + id, {
+      method: 'get'
+    });
+  }
+
+  requestReview(id) {
+    return this._request('/reviews/' + id, {
       method: 'get'
     });
   }
@@ -327,32 +354,18 @@ class APIService {
     });
   }
 
-  postReview({
-    businessId,
-    overallRating,
-    priceRating,
-    customerServiceRating,
-    qualityRating,
-    description,
-    serviceCategories,
-    repeatCustomer,
-    transactionOccurred,
-    date
-  }) {
+  postReview(params) {
     return this._request('/reviews', {
       method: 'post',
-      data: filterParams({
-        'business_id': businessId,
-        'overall_rating': overallRating,
-        'price_rating': priceRating,
-        'customer_service_rating': customerServiceRating,
-        'quality_rating': qualityRating,
-        'description': description,
-        'service_categories': serviceCategories,
-        'repeat_customer': repeatCustomer,
-        'transaction_occurred': transactionOccurred,
-        'date': date
-      })
+      data: filterParams(snakeCase(params))
+    });
+  }
+
+  updateReview(params) {
+    const { id, ...rest } = params;
+    return this._request('/reviews/' + id, {
+      method: 'put',
+      data: filterParams(snakeCase(rest))
     });
   }
 
@@ -362,24 +375,18 @@ class APIService {
     });
   }
 
-  registerBusiness({ name, description, email, phoneNumber, website, address1, address2, city, state, zipCode, serviceCategories }) {
+  registerBusiness(params) {
     return this._request('/businesses', {
       method: 'post',
-      data: filterParams({
-        'name': name,
-        'description': description,
-        'email': email,
-        'phone_number': phoneNumber,
-        'website': website,
-        'service_categories': serviceCategories,
-        'address': filterParams({
-          'address1': address1,
-          'address2': address2,
-          'city': city,
-          'state': state,
-          'zip_code': zipCode
-        })
-      })
+      data: filterParams(snakeCase(params))
+    });
+  }
+
+  updateBusiness(params) {
+    const { id, ...rest } = params;
+    return this._request('/businesses/' + id, {
+      method: 'put',
+      data: filterParams(snakeCase(rest))
     });
   }
 
@@ -402,6 +409,12 @@ class APIService {
       .then(response => {
         return response;
       });
+  }
+
+  deleteBusinessPicture(businessId, imageId) {
+    return this._request('/businesses/' + businessId + '/images/' + imageId, {
+      method: 'delete'
+    });
   }
 
 }

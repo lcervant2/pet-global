@@ -1,0 +1,22 @@
+@import '../../base';
+
+.about-page {
+
+  padding: $page-padding-top 0 $page-padding-bottom 0;
+
+  background-color: white;
+
+  .container {
+    width: 40rem;
+
+    ul {
+      //position: relative;
+      padding-left: 2rem;
+    }
+
+    @media #{$mobile-breakpoint} {
+      width: 100%;
+    }
+  }
+
+}

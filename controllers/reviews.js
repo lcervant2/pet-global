@@ -47,6 +47,10 @@ const findAll = (req, res, next) => {
 };
 
 const findById = (req, res, next) => {
+  // check id
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return next(new errors.NotFoundError());
+
   // find the review by id and popular user and business
   models.Review
     .findById(req.params.id)

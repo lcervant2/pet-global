@@ -46,5 +46,5 @@ export function withAuth(WrappedComponent) {
       return <WrappedComponent isLoggedIn={this.state.isLoggedIn} currentUser={this.state.currentUser} {...this.props} />;
     }
 
-  };
-};
+  }
+}

@@ -1,0 +1,56 @@
+@import '../../base';
+
+.review {
+
+  padding: 0 0.5rem;
+
+  &__options {
+
+    width: 6rem;
+
+    float: right;
+
+    @media #{$mobile-breakpoint} {
+      width: 5rem;
+    }
+
+    .button {
+      margin-bottom: 0.5rem;
+    }
+
+  }
+
+  &__rating {
+
+    margin-bottom: 0.5rem;
+
+    .rating {
+      font-size: $font-size-sub-headline;
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    a {
+      color: $text-color;
+    }
+
+  }
+
+  &__date {
+
+    margin-bottom: 0.5rem;
+
+  }
+
+  &__ratings {
+
+    margin-bottom: 0.5rem;
+
+    .rating {
+      display: inline-block;
+      margin-left: 1rem;
+    }
+
+  }
+
+}

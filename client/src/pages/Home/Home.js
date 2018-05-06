@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
-import {
-  Container,
-  Input,
-  Dropdown,
-  Button,
-  Grid,
-  Form
-} from 'semantic-ui-react'
-import './Home.css';
+import './Home.scss';
 
-import queryString from 'query-string';
+import Container from '../../components/UI/Container/Container';
+import Form from '../../components/UI/Form/Form';
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
+import VerticalCenter from '../../components/UI/VerticalCenter/VerticalCenter';
+import Image from '../../components/UI/Image/Image';
+
+import qs from 'qs';
 
 import { withAuth } from '../../helpers/withAuth';
+
+import background from '../../images/home_background.jpg';
+import logo from '../../images/logo_white.svg';
 
 class Home extends Component {
 
@@ -66,7 +68,7 @@ class Home extends Component {
   handleSearchSubmit(e) {
     e.preventDefault();
 
-    const query = queryString.stringify({
+    const query = qs.stringify({
       query: this.state.query,
       location: this.state.location
     });
@@ -74,30 +76,21 @@ class Home extends Component {
   }
 
   render() {
-    const { currentUser } = this.props;
-    const { locations, location } = this.state;
-
     return (
-      <Container>
-        <Grid centered>
-
-          <Grid.Row>
-            <Grid.Column width={14} className='home-search'>
+      <div className='home-page' >
+        <Container>
+          <VerticalCenter>
+            <div className='home-page__form'>
+              <Image src={logo} />
+              <div className='home-page__slogan'>Local petcare gone global</div>
 
               <Form onSubmit={this.handleSearchSubmit}>
-                <Input name='query' type='text' placeholder='Search...' action fluid size='large' onChange={this.handleChange}>
-                  <input />
-                  <Dropdown name='location' selection options={locations}
-                            value={location} onChange={this.handleChange} placeholder='Location Filter' />
-                  <Button type='submit' primary size='large'>Search</Button>
-                </Input>
+                <Input name='query' type='text' placeholder='Search...' icon='search' onChange={this.handleChange} action={<Button primary onClick={this.handleSearchSubmit}>Search</Button>} />
               </Form>
-
-            </Grid.Column>
-          </Grid.Row>
-
-        </Grid>
-      </Container>
+            </div>
+          </VerticalCenter>
+        </Container>
+      </div>
     );
   }
 

@@ -9,6 +9,7 @@ module.exports = (app) => {
   const businessesRoutes = require('./businesses')(app);
   const reviewsRoutes = require('./reviews')(app);
   const searchRoutes = require('./search')(app);
+  const passwordRoutes = require('./password')(app);
 
   // set routes
   router.use('/', authRoutes);
@@ -16,6 +17,7 @@ module.exports = (app) => {
   router.use('/businesses', businessesRoutes);
   router.use('/reviews', reviewsRoutes);
   router.use('/search', searchRoutes);
+  router.use('/password', passwordRoutes);
 
   return router;
 };

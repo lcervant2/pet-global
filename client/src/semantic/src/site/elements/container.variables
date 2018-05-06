@@ -1,6 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-
-@computerWidth: 800px;
-@largeMonitorWidth: 960px;

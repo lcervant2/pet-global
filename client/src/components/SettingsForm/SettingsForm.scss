@@ -1,0 +1,21 @@
+@import '../../base';
+
+.settings-form {
+
+  width: 42rem;
+  margin: 0 auto;
+
+  .panel {
+    margin-bottom: 1.5rem;
+  }
+
+  &__profile-picture {
+    width: 10rem;
+    margin: 0 auto;
+  }
+
+  @media #{$mobile-breakpoint} {
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,54 @@
+@import '../../base';
+
+.header {
+
+  &__main-menu {
+
+    width: 100%;
+
+    padding: 1.5rem 0;
+
+    background-color: $header-background-color;
+
+  }
+
+  &__logo {
+
+    position: relative;
+
+    bottom: 2px;
+
+    height: 2.25rem;
+
+    .image {
+      display: block;
+    }
+
+
+  }
+
+  &__services-menu {
+
+    width: 100%;
+
+    background-color: $services-menu-background-color;
+
+    &__label {
+      @media #{$tablet-breakpoint} {
+        display: none !important;
+      }
+    }
+
+  }
+
+  @media #{$mobile-breakpoint} {
+    &__services-menu {
+      display: none;
+    }
+
+    &__search {
+      display: none !important;
+    }
+  }
+
+}

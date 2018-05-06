@@ -1,0 +1,42 @@
+@import '../../base';
+
+.edit-review-page {
+
+  padding: $page-padding-top 0 $page-padding-bottom 0;
+
+  background-color: white;
+
+  &__form {
+
+    width: 42rem;
+
+    margin: 0 auto;
+
+    @media #{$mobile-breakpoint} {
+      width: 100% !important;
+    }
+
+  }
+
+  .checkbox {
+
+    label {
+      display: inline-block;
+      margin-left: 0.5rem;
+      font-weight: 400;
+    }
+
+    &--bold {
+      label {
+        font-weight: 600;
+      }
+    }
+
+  }
+
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  width: 100%;
+}

@@ -1,0 +1,41 @@
+@import '../../../base';
+
+.message {
+
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+
+  background-color: $message-background-color;
+
+  border: 1px solid $message-border-color;
+  border-radius: 0.25rem;
+
+  &__title {
+    color: $message-title-color;
+    font-size: $font-size-sub-headline;
+    font-weight: 600;
+  }
+
+  &__content {
+    color: $message-content-color;
+
+    ul {
+      margin-left: 1.5rem;
+      margin-top: 0.75rem;
+    }
+  }
+
+  &--error {
+    border-color: $message-border-error-color;
+    background-color: $message-background-error-color;
+
+    & .message__title {
+      color: $message-title-error-color;
+    }
+
+    & .message__content {
+      color: $message-content-error-color;
+    }
+  }
+
+}

@@ -1,0 +1,29 @@
+@import '../../../../base';
+
+.form__group {
+
+  display: flex;
+  align-items: center;
+
+  flex: 1;
+
+  & .form__field {
+    padding-left: 0.5rem;
+    padding-right: 0.5em;
+
+    & + .form__field {
+      margin-top: 0;
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+
+
+}

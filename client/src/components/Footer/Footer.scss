@@ -1,0 +1,48 @@
+@import '../../base';
+
+.footer {
+
+  margin: 0;
+  padding: 2.5rem;
+
+  background-color: $footer-background-color;
+
+  &__container {
+
+    display: flex;
+    flex-direction: row;
+
+    @media #{$mobile-breakpoint} {
+      flex-direction: column;
+    }
+
+  }
+
+  &__section {
+
+    flex: 1;
+
+    &__header {
+      color: $footer-header-color;
+      font-size: $font-size-sub-headline;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    &__link {
+      display: block;
+      color: $footer-link-color;
+      font-size: $font-size-primary;
+
+      &:hover {
+        color: $footer-link-hover-color;
+      }
+    }
+
+    @media #{$mobile-breakpoint} {
+      margin-bottom: 1rem;
+    }
+
+  }
+
+}

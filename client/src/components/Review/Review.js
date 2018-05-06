@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {
-  Segment,
-  Rating,
-  Image,
-  Label,
-  Button,
-  Header
-} from 'semantic-ui-react';
-import './Review.css';
+import classNames from 'classnames';
+import './Review.scss';
 
 import defaultProfilePicture from '../../images/profile_default.png';
 import defaultBusinessPicture from '../../images/business_default.png';
 
-import SpacedSegment from '../SpacedSegment';
-import SquareImage from '../SquareImage';
+import Image from '../UI/Image/Image';
+import ImageSquare from '../UI/Image/Square/Square';
+import Button from '../UI/Button/Button';
+import Rating from '../UI/Rating/Rating';
 
 import APIService from '../../services/APIService';
 
@@ -49,78 +44,70 @@ class Review extends Component {
 
   render() {
     const { isDeletingReview } = this.state;
-    const { review, currentUser, isLoggedIn, showBusiness } = this.props;
+    const { className, review, currentUser, isLoggedIn, showBusiness } = this.props;
+
+    const inputClass = classNames('review', className);
 
     return (
-      <Segment padded>
+      <div className={inputClass}>
 
         {isLoggedIn && currentUser.id === review.user.id &&
-          <Button size='mini' floated='right' color='red' content='Delete' onClick={this.deleteReview} loading={isDeletingReview} />
+          <div className='review__options'>
+            <Link to={'/reviews/' + review.id + '/edit'}><Button block>Edit</Button></Link>
+            <Button block onClick={this.deleteReview} loading={isDeletingReview}>Delete</Button>
+          </div>
         }
 
-        <SpacedSegment spacing={0}>
-          <Rating
-            color='yellow' disabled size='huge' icon='star'
-            defaultRating={review.overallRating} maxRating={5}
-            style={{ display: 'inline-block', marginRight: '0.6em' }}
-          />
-          <Link
-            to={'/profile/' + review.user.username}
-            style={{ display: 'inline-block', padding: 0, margin: 0, position: 'relative', bottom: '0.4em', color: 'inherit' }}>
+        <div className='review__rating'>
+          <Rating icon='star' rating={review.overallRating} maxRating={5} />
+          <Link to={'/profile/' + review.user.username}>
             <strong>
-              <Image avatar size='mini' src={review.user.profilePicture || defaultProfilePicture} alt=''
-                     style={{ width: '24px', height: '24px', marginRight: '8px' }} />
-              <span style={{ position: 'relative', top: '1px' }} >{review.user.firstName} {review.user.lastName}</span>
+              <Image avatar src={review.user.profilePicture || defaultProfilePicture} />
+              {review.user.firstName} {review.user.lastName}
             </strong>
           </Link>
-        </SpacedSegment>
+        </div>
 
-        <SpacedSegment spacing={3}>
+        <div className='review__date'>
           <small>Visited on {formatDate(review.date)}</small>
-        </SpacedSegment>
+        </div>
 
         {showBusiness &&
-        <SpacedSegment spacing={4}>
+        <div className='review__business'>
           <Link to={'/businesses/' + review.business.id}>
-            <SquareImage src={review.business.images.length ? review.business.images[0].url : defaultBusinessPicture}
-                         style={{ display: 'inline-block', width: '32px', height: '32px', verticalAlign: 'middle', marginRight: '8px' }} />
-            <div style={{ display: 'inline-block', lineHeight: '32px', position: 'relative', top: '2px' }}>
-              <Header size='small' style={{ margin: 0, padding: 0 }}>{review.business.name}</Header>
-            </div>
+            <ImageSquare src={review.business.images.length ? review.business.images[0].url : defaultBusinessPicture} />
+            {review.business.name}
           </Link>
-        </SpacedSegment>
+        </div>
         }
 
-        <SpacedSegment spacing={3}>
+        <div className='review__ratings'>
           <strong>Price: </strong>
-          <Rating size='small' disabled defaultRating={review.priceRating} maxRating={5} />
+          <Rating rating={review.priceRating} maxRating={5} dark />
           <br />
 
           <strong>Customer Service: </strong>
-          <Rating size='small' disabled defaultRating={review.customerServiceRating} maxRating={5} />
+          <Rating rating={review.customerServiceRating} maxRating={5} dark />
           <br />
 
           <strong>Quality: </strong>
-          <Rating size='small' disabled defaultRating={review.qualityRating} maxRating={5} />
-        </SpacedSegment>
+          <Rating rating={review.qualityRating} maxRating={5} dark />
+        </div>
 
-        <SpacedSegment spacing={(review.transactionOccured || review.repeatCustomer) ? 4 : 0}>
+        <div className='rating__description'>
           {review.description}
-        </SpacedSegment>
+        </div>
 
-        {(review.transactionOccured || review.repeatCustomer) &&
-          <SpacedSegment spacing={0}>
-            {review.transactionOccurred && <Label icon='dollar' content='Money Spent' />}
-            {review.transactionOccurred && <span>&nbsp;&nbsp;&nbsp;</span>}
-            {review.repeatCustomer && <Label icon='repeat' content='Would Return' />}
-          </SpacedSegment>
-        }
-
-      </Segment>
+      </div>
     );
   }
 
 }
+
+Review.propTypes = {
+  showBusiness: PropTypes.bool,
+  review: PropTypes.object
+};
 
 Review.defaultProps = {
   showBusiness: false

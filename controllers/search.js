@@ -9,7 +9,7 @@ const convertCase = require('../helpers/convertCase');
 const METERS_PER_MILE = 1609.34;
 
 // setup guass decay function
-const guass = guassDecay(10, 0.33, 2);
+const guass = guassDecay(10, 0.33, 0);
 
 // setup validator
 const validator = new Validator({ allErrors: true, removeAdditional: true, useDefaults: true });

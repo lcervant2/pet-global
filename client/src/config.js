@@ -7,8 +7,8 @@ if (process.env.NODE_ENV === 'production') {
   // Production config
   //
 
-  CLIENT_ID = 'TXBRjIOtlsvszEAt4LMNjK5kLk1yYJvp';
-  CLIENT_SECRET = 'tG51cT3uxFOzfjUadXkcmh9rLCskuaGm0QNW3pYDQc1FAAprXmkSNDs7cYSGSG75';
+  CLIENT_ID = 'HujaMOS6bKzzr50fkh8zKXN0n2Q6N2cb';
+  CLIENT_SECRET = 'D8BW0qXZEMn9rO2jg3uV0lYHUvUs8H2zHjTxYgJmgEaOBP5KcLVNOBWRe0kfPpIC';
 
 } else {
 
